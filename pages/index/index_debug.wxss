@@ -1,4 +1,4 @@
-/* pages/index/index.wxss */
+/* pages/index/index_debug.wxss - 调试版本 */
 
 .container {
   position: relative;
@@ -31,13 +31,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0rpx 32rpx;
-  padding-left: 32rpx;
-  padding-right: 32rpx;
-  box-sizing: border-box;
-  width: 100%;
-  background-color: #fff;
-  border-bottom: 1rpx solid #eee;
+  margin-bottom: 32rpx;
+  padding-top: 100rpx;
 }
 
 .title {
@@ -66,6 +61,74 @@
 
 .settings-btn {
   font-size: 24rpx;
+}
+
+/* 调试信息区域 */
+.debug-section {
+  background-color: #FFF3E0;
+  border: 2rpx solid #FF9800;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 32rpx;
+}
+
+.debug-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #E65100;
+  margin-bottom: 16rpx;
+  text-align: center;
+}
+
+.debug-content {
+  margin-bottom: 16rpx;
+}
+
+.debug-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8rpx 0;
+  border-bottom: 1rpx solid #FFCC80;
+}
+
+.debug-item:last-child {
+  border-bottom: none;
+}
+
+.debug-label {
+  font-size: 28rpx;
+  color: #BF360C;
+  font-weight: 500;
+}
+
+.debug-value {
+  font-size: 28rpx;
+  color: #E65100;
+  font-weight: bold;
+  max-width: 300rpx;
+  text-align: right;
+  word-break: break-all;
+}
+
+.debug-buttons {
+  display: flex;
+  gap: 16rpx;
+  justify-content: center;
+}
+
+.debug-btn {
+  background-color: #FF9800;
+  color: white;
+  border: none;
+  border-radius: 8rpx;
+  padding: 16rpx 24rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.debug-btn:active {
+  background-color: #F57C00;
 }
 
 /* 状态信息 */
@@ -179,14 +242,21 @@
   margin-bottom: 32rpx;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 .loading-text {
   font-size: 32rpx;
   color: #2C3E50;
+  margin-bottom: 16rpx;
+}
+
+.loading-debug {
+  font-size: 24rpx;
+  color: #FF9800;
+  font-weight: bold;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* 数字输入区域 */
@@ -203,65 +273,72 @@
 
 .number-btn {
   height: 96rpx;
-  background-color: #4A90E2;
-  color: white;
+  background-color: white;
+  border: 2rpx solid #E0E0E0;
   border-radius: 16rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 36rpx;
   font-weight: bold;
-  border: none;
-  box-shadow: 0 4rpx 16rpx rgba(74, 144, 226, 0.3);
+  color: #2C3E50;
   transition: all 0.2s ease;
 }
 
 .number-btn:active {
+  background-color: #F5F5F5;
+  border-color: #4A90E2;
   transform: scale(0.95);
-  box-shadow: 0 2rpx 8rpx rgba(74, 144, 226, 0.3);
 }
 
+/* 功能按钮 */
 .function-buttons {
   display: flex;
-  gap: 24rpx;
+  gap: 16rpx;
 }
 
 .function-btn {
   flex: 1;
-  height: 96rpx;
-  border-radius: 48rpx;
+  height: 80rpx;
+  border-radius: 16rpx;
   font-size: 28rpx;
   font-weight: bold;
   border: none;
-  color: white;
+  transition: all 0.2s ease;
 }
 
 .clear-btn {
-  background-color: #FF5722;
+  background-color: #FF9800;
+  color: white;
+}
+
+.clear-btn:active {
+  background-color: #F57C00;
 }
 
 .new-game-btn {
   background-color: #4CAF50;
+  color: white;
 }
 
-.function-btn:disabled {
-  opacity: 0.6;
-  background-color: #BDBDBD;
+.new-game-btn:active {
+  background-color: #388E3C;
 }
 
 /* 冲突提示 */
 .conflict-section {
+  background-color: #FFEBEE;
+  border: 2rpx solid #F44336;
+  border-radius: 16rpx;
+  padding: 24rpx;
   margin-bottom: 32rpx;
+  text-align: center;
 }
 
 .conflict-text {
-  display: block;
-  padding: 24rpx;
-  background-color: #FF5722;
-  color: white;
-  text-align: center;
-  border-radius: 16rpx;
   font-size: 28rpx;
+  color: #C62828;
+  font-weight: 500;
 }
 
 /* 游戏信息 */
@@ -269,9 +346,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24rpx;
   background-color: white;
   border-radius: 16rpx;
+  padding: 24rpx;
   box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
 }
 
@@ -284,26 +361,27 @@
 .timer-label, .hints-label {
   font-size: 28rpx;
   color: #2C3E50;
+  font-weight: 500;
 }
 
 .timer-value, .hints-value {
-  font-size: 28rpx;
+  font-size: 32rpx;
   color: #4A90E2;
   font-weight: bold;
 }
 
 .hint-btn {
-  padding: 8rpx 16rpx;
-  background-color: #FF9800;
+  background-color: #9C27B0;
   color: white;
-  border-radius: 16rpx;
-  font-size: 24rpx;
   border: none;
+  border-radius: 8rpx;
+  padding: 12rpx 20rpx;
+  font-size: 24rpx;
+  font-weight: bold;
 }
 
-.hint-btn:disabled {
-  opacity: 0.6;
-  background-color: #BDBDBD;
+.hint-btn:active {
+  background-color: #7B1FA2;
 }
 
 /* 加载遮罩 */
@@ -313,7 +391,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -322,13 +400,12 @@
 
 .loading-content {
   background-color: white;
-  padding: 64rpx;
   border-radius: 24rpx;
+  padding: 48rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32rpx;
-  box-shadow: 0 16rpx 64rpx rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.3);
 }
 
 /* 对话框 */
@@ -338,7 +415,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -347,11 +424,11 @@
 
 .dialog-content {
   background-color: white;
-  padding: 48rpx;
   border-radius: 24rpx;
-  width: 80%;
+  padding: 48rpx;
   max-width: 600rpx;
-  box-shadow: 0 16rpx 64rpx rgba(0, 0, 0, 0.2);
+  width: 90%;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.3);
 }
 
 .dialog-title {
@@ -373,6 +450,7 @@
 .dialog-buttons {
   display: flex;
   gap: 16rpx;
+  justify-content: center;
 }
 
 .dialog-btn {
@@ -382,6 +460,7 @@
   font-size: 28rpx;
   font-weight: bold;
   border: none;
+  transition: all 0.2s ease;
 }
 
 .dialog-btn.primary {
@@ -389,33 +468,18 @@
   color: white;
 }
 
+.dialog-btn.primary:active {
+  background-color: #357ABD;
+}
+
 .dialog-btn.secondary {
   background-color: #E0E0E0;
   color: #2C3E50;
 }
 
-/* 响应式设计 */
-@media (max-width: 750rpx) {
-  .main-content {
-    padding: 24rpx;
-  }
-  
-  .board-cell {
-    width: 70rpx;
-    height: 70rpx;
-  }
-  
-  .cell-number {
-    font-size: 32rpx;
-  }
-  
-  .number-btn {
-    height: 80rpx;
-    font-size: 32rpx;
-  }
-  
-  .function-btn {
-    height: 80rpx;
-    font-size: 24rpx;
-  }
+.dialog-btn.secondary:active {
+  background-color: #BDBDBD;
 }
+
+
+

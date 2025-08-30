@@ -1,91 +1,84 @@
 <!--pages/index/index.wxml-->
 <view class="container">
   <!-- 背景图片 -->
-  <image class="background-image" src="/images/background.jpg" mode="aspectFill"></image>
+  <!-- <image class="background-image" src="/images/background.jpg" mode="aspectFill"></image> -->
   
-  <!-- 主界面 -->
-  <view class="main-content">
-    <!-- 标题栏和控制按钮 -->
-    <view class="header-section">
-      <view class="title">数独游戏</view>
-      <view class="control-buttons">
-        <button class="control-btn network-btn" bindtap="showNetworkDialog">网</button>
-        <button class="control-btn settings-btn" bindtap="goToSettings">设置</button>
-      </view>
-    </view>
+  <!-- 标题栏 - 移到最上方 -->
+  <view class="header-section">
+    <view class="title">数独游戏</view>
+  </view>
 
-    <!-- 状态信息 -->
-    <view class="status-section">
-      <view wx:if="{{networkStatus}}" class="status-info">
-        {{networkStatus}}
-      </view>
-      <view wx:if="{{errorMessage}}" class="error-message">
-        {{errorMessage}}
-      </view>
+  <!-- 状态信息 -->
+  <view class="status-section">
+    <view wx:if="{{networkStatus}}" class="status-info">
+      {{networkStatus}}
     </view>
+    <view wx:if="{{errorMessage}}" class="error-message">
+      {{errorMessage}}
+    </view>
+  </view>
 
-    <!-- 游戏棋盘 -->
-    <view class="game-board-section">
-      <view wx:if="{{board.length > 0}}" class="sudoku-board">
-        <view class="board-grid">
-          <view wx:for="{{board}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex" class="board-row">
-            <view wx:for="{{row}}" wx:for-item="cell" wx:for-index="colIndex" wx:key="colIndex" 
-                  class="board-cell {{getCellClass(rowIndex, colIndex)}}"
-                  bindtap="onCellClick"
-                  data-row="{{rowIndex}}"
-                  data-col="{{colIndex}}">
-              <text wx:if="{{cell !== 0}}" class="cell-number">{{cell}}</text>
-            </view>
+  <!-- 游戏棋盘 -->
+  <view class="game-board-section">
+    <view wx:if="{{board.length > 0}}" class="sudoku-board">
+      <view class="board-grid">
+        <view wx:for="{{board}}" wx:for-item="row" wx:for-index="rowIndex" wx:key="rowIndex" class="board-row">
+          <view wx:for="{{row}}" wx:for-item="cell" wx:for-index="colIndex" wx:key="colIndex" 
+                class="board-cell {{getCellClass(rowIndex, colIndex)}}"
+                bindtap="onCellClick"
+                data-row="{{rowIndex}}"
+                data-col="{{colIndex}}">
+            <text wx:if="{{cell !== 0}}" class="cell-number">{{cell}}</text>
           </view>
         </view>
       </view>
-      <view wx:else class="loading-board">
-        <view class="loading-spinner"></view>
-        <text class="loading-text">加载棋盘中...</text>
+    </view>
+    <view wx:else class="loading-board">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载棋盘中...</text>
+    </view>
+  </view>
+
+  <!-- 数字输入区域 -->
+  <view class="input-section">
+    <!-- 数字输入网格 -->
+    <view class="number-grid">
+      <view wx:for="{{[1,2,3,4,5,6,7,8,9]}}" wx:key="*this" 
+            class="number-btn"
+            bindtap="onNumberClick"
+            data-number="{{item}}">
+        {{item}}
       </view>
     </view>
 
-    <!-- 数字输入区域 -->
-    <view class="input-section">
-      <!-- 数字输入网格 -->
-      <view class="number-grid">
-        <view wx:for="{{[1,2,3,4,5,6,7,8,9]}}" wx:key="*this" 
-              class="number-btn"
-              bindtap="onNumberClick"
-              data-number="{{item}}">
-          {{item}}
-        </view>
-      </view>
-
-      <!-- 功能按钮行 -->
-      <view class="function-buttons">
-        <button class="function-btn clear-btn" bindtap="onClearClick" disabled="{{isSolved || isLoading}}">
-          清除
-        </button>
-        <button class="function-btn new-game-btn" bindtap="onNewGameClick" disabled="{{isLoading}}">
-          新游戏
-        </button>
-      </view>
+    <!-- 功能按钮行 -->
+    <view class="function-buttons">
+      <button class="function-btn clear-btn" bindtap="onClearClick" disabled="{{isSolved || isLoading}}">
+        清除
+      </button>
+      <button class="function-btn new-game-btn" bindtap="onNewGameClick" disabled="{{isLoading}}">
+        新游戏
+      </button>
     </view>
+  </view>
 
-    <!-- 冲突提示 -->
-    <view wx:if="{{conflicts.length > 0 && !isSolved}}" class="conflict-section">
-      <text class="conflict-text">棋盘上存在冲突，请检查重复的数字</text>
+  <!-- 冲突提示 -->
+  <view wx:if="{{conflicts.length > 0 && !isSolved}}" class="conflict-section">
+    <text class="conflict-text">棋盘上存在冲突，请检查重复的数字</text>
+  </view>
+
+  <!-- 游戏信息 -->
+  <view class="game-info">
+    <view class="timer" wx:if="{{showTimer}}">
+      <text class="timer-label">用时：</text>
+      <text class="timer-value">{{timeDisplay}}</text>
     </view>
-
-    <!-- 游戏信息 -->
-    <view class="game-info">
-      <view class="timer" wx:if="{{showTimer}}">
-        <text class="timer-label">用时：</text>
-        <text class="timer-value">{{timeDisplay}}</text>
-      </view>
-      <view class="hints" wx:if="{{showHints}}">
-        <text class="hints-label">提示：</text>
-        <text class="hints-value">{{hintsUsed}}/{{maxHints}}</text>
-        <button class="hint-btn" bindtap="onHintClick" disabled="{{hintsUsed >= maxHints || isSolved}}">
-          提示
-        </button>
-      </view>
+    <view class="hints" wx:if="{{showHints}}">
+      <text class="hints-label">提示：</text>
+      <text class="hints-value">{{hintsUsed}}/{{maxHints}}</text>
+      <button class="hint-btn" bindtap="onHintClick" disabled="{{hintsUsed >= maxHints || isSolved}}">
+        提示
+      </button>
     </view>
   </view>
 

@@ -1,5 +1,5 @@
 {
-  "description": "数独游戏微信小程序 - 稳定推送版本",
+  "description": "数独游戏微信小程序 - 真实AppID版本",
   "packOptions": {
     "ignore": [],
     "include": []
@@ -11,7 +11,7 @@
     "scopeDataCheck": false,
     "coverView": true,
     "es6": false,
-    "postcss": true,
+    "postcss": false,
     "compileHotReLoad": false,
     "lazyloadPlaceholderEnable": false,
     "preloadBackgroundData": false,
@@ -47,8 +47,8 @@
     }
   },
   "compileType": "miniprogram",
-  "libVersion": "2.28.1",
-  "appid": "wx8c4cfd994ac7b90b",
+  "libVersion": "2.27.0",
+  "appid": "wx1234567890123456",
   "projectname": "sudoku-miniprogram",
   "condition": {},
   "editorSetting": {
@@ -57,3 +57,5 @@
   },
   "simulatorPluginLibVersion": {}
 }
+
+

@@ -31,8 +31,8 @@ class SudokuGame {
   generateSolution() {
     const solution = Array(9).fill().map(() => Array(9).fill(0));
     
-    // 填充对角线上的3x3方块
-    for (let i = 0; i < 9; i += 4) {
+    // 填充对角线上的3x3方块（步长改为3，确保不越界）
+    for (let i = 0; i < 9; i += 3) {
       this.fillBox(solution, i, i);
     }
     

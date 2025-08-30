@@ -1,5 +1,5 @@
 {
-  "description": "数独游戏微信小程序 - 稳定推送版本",
+  "description": "数独游戏微信小程序 - 最新版本",
   "packOptions": {
     "ignore": [],
     "include": []
@@ -10,23 +10,23 @@
     "urlCheck": false,
     "scopeDataCheck": false,
     "coverView": true,
-    "es6": false,
+    "es6": true,
     "postcss": true,
-    "compileHotReLoad": false,
+    "compileHotReLoad": true,
     "lazyloadPlaceholderEnable": false,
     "preloadBackgroundData": false,
     "minified": true,
     "autoAudits": false,
-    "newFeature": false,
+    "newFeature": true,
     "uglifyFileName": false,
-    "uploadWithSourceMap": false,
-    "useIsolateContext": false,
+    "uploadWithSourceMap": true,
+    "useIsolateContext": true,
     "nodeModules": false,
-    "enhance": false,
-    "useMultiFrameRuntime": false,
-    "useApiHook": false,
-    "useApiHostProcess": false,
-    "showShadowRootInWxmlPanel": false,
+    "enhance": true,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "showShadowRootInWxmlPanel": true,
     "packNpmManually": false,
     "enableEngineNative": false,
     "packNpmRelationList": [],
@@ -47,7 +47,7 @@
     }
   },
   "compileType": "miniprogram",
-  "libVersion": "2.28.1",
+  "libVersion": "2.32.0",
   "appid": "wx8c4cfd994ac7b90b",
   "projectname": "sudoku-miniprogram",
   "condition": {},
@@ -57,3 +57,5 @@
   },
   "simulatorPluginLibVersion": {}
 }
+
+

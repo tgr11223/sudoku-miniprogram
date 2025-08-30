@@ -1,5 +1,5 @@
 {
-  "description": "数独游戏微信小程序 - 稳定推送版本",
+  "description": "数独游戏微信小程序 - 稳定版本2.28.1",
   "packOptions": {
     "ignore": [],
     "include": []
@@ -48,7 +48,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.28.1",
-  "appid": "wx8c4cfd994ac7b90b",
+  "appid": "touristappid",
   "projectname": "sudoku-miniprogram",
   "condition": {},
   "editorSetting": {
@@ -57,3 +57,5 @@
   },
   "simulatorPluginLibVersion": {}
 }
+
+

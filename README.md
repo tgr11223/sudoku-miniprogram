@@ -1,5 +1,7 @@
 # 数独游戏微信小程序
 
+![数独游戏](https://example.com/sudoku-game.png) <!-- 实际项目中替换为真实的截图URL -->
+
 一个功能完整的数独游戏微信小程序，包含游戏逻辑、统计系统、设置页面和成就系统。
 
 ## 功能特性
@@ -45,11 +47,89 @@
 ```
 sudoku-miniprogram/
 ├── app.js                 # 小程序入口文件
-├── app.json              # 小程序配置文件
+├── app.json              # 小程序全局配置
 ├── app.wxss              # 全局样式文件
 ├── sitemap.json          # 站点地图配置
+├── pages/                # 页面文件夹
+│   ├── index/            # 游戏主页
+│   ├── settings/         # 设置页面
+│   └── statistics/       # 统计页面
+├── utils/                # 工具类文件
+│   ├── sudoku.js         # 数独游戏核心逻辑
+│   └── storage.js        # 本地存储管理
+├── images/               # 图片资源
 ├── project.config.json   # 项目配置文件
-├── README.md             # 项目说明文档
+├── .gitignore            # Git忽略文件配置
+└── README.md             # 项目说明文档
+```
+
+## 安装与使用
+
+### 前提条件
+- 安装 [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)
+- 注册微信小程序账号并创建项目
+
+### 安装步骤
+1. 克隆本仓库
+   ```bash
+   git clone https://github.com/your-username/sudoku-miniprogram.git
+   ```
+
+2. 在微信开发者工具中导入项目
+   - 打开微信开发者工具
+   - 点击"导入项目"
+   - 选择项目目录
+   - 填写您的AppID（或使用测试号）
+   - 点击"导入"
+
+3. 编译运行
+   - 点击开发者工具中的"编译"按钮
+   - 可以在模拟器中预览，或使用微信扫码在真机上体验
+
+## 开发指南
+
+### 配置说明
+- 项目配置文件：`project.config.json`
+- 全局配置：`app.json`
+- 页面配置：各页面目录下的`.json`文件
+
+### 核心文件说明
+- 数独游戏核心逻辑：`utils/sudoku.js`
+- 本地存储管理：`utils/storage.js`
+- 游戏主页面：`pages/index/index.js`
+
+### 开发建议
+- 遵循微信小程序开发规范
+- 使用ES6+语法
+- 代码注释清晰
+- 保持良好的项目结构
+
+## 贡献指南
+
+欢迎贡献代码！请按照以下步骤：
+
+1. Fork 本仓库
+2. 创建您的特性分支
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+3. 提交您的更改
+   ```bash
+   git commit -m 'Add some AmazingFeature'
+   ```
+4. 推送到分支
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+5. 开启Pull Request
+
+## 许可证
+
+本项目采用 MIT 许可证 - 详情请查看 [LICENSE](LICENSE) 文件
+
+## 免责声明
+
+本项目仅作为学习和参考使用，非商业用途。如有任何问题，请联系项目维护者。
 ├── pages/                # 页面目录
 │   ├── index/           # 主游戏页面
 │   ├── settings/        # 设置页面

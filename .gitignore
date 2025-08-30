@@ -12,3 +12,50 @@ $RECYCLE.BIN/
 
 # Node.js
 node_modules/
+
+# 微信开发者工具
+.project
+.project.user
+.project.metadata
+
+# 微信小程序缓存
+miniprogram_npm/
+.npm/
+
+# 微信开发者工具生成的文件
+*.log
+*.log.*
+*.lock
+
+# 编译后的文件
+build/
+dist/
+
+# 微信开发者工具的临时文件
+.temp/
+.cache/
+
+# IDE配置文件
+.vscode/
+.idea/
+
+# 私人配置文件
+project.private.config.json
+*.private.json
+
+# 备份文件
+*.bak
+*.backup
+*.old
+
+# 敏感信息文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 其他临时文件
+*.swp
+*.swo
+*~

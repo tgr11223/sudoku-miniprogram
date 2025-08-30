@@ -1,5 +1,5 @@
 {
-  "description": "数独游戏微信小程序 - 稳定推送版本",
+  "description": "数独游戏微信小程序 - 超稳定版本2.27.0",
   "packOptions": {
     "ignore": [],
     "include": []
@@ -11,7 +11,7 @@
     "scopeDataCheck": false,
     "coverView": true,
     "es6": false,
-    "postcss": true,
+    "postcss": false,
     "compileHotReLoad": false,
     "lazyloadPlaceholderEnable": false,
     "preloadBackgroundData": false,

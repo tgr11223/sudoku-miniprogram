@@ -1,4 +1,4 @@
-// pages/index/index.js
+// pages/index/index_debug.js - 调试版本
 const { SudokuGame, LOCAL_PUZZLES } = require('../../utils/sudoku.js');
 const { GameStorage } = require('../../utils/storage.js');
 
@@ -28,7 +28,12 @@ Page({
     // 其他
     networkStatus: '',
     errorMessage: null,
-    solvedMessage: ''
+    solvedMessage: '',
+    
+    // 调试信息
+    debugInfo: '',
+    gameEngineStatus: '未初始化',
+    storageStatus: '未初始化'
   },
 
   // 游戏引擎和存储
@@ -38,21 +43,22 @@ Page({
   gameStartTime: null,
 
   onLoad() {
+    console.log('页面加载开始');
     this.initializeGame();
   },
 
   onShow() {
-    // 页面显示时加载设置
+    console.log('页面显示');
     this.loadSettings();
   },
 
   onHide() {
-    // 页面隐藏时保存游戏状态
+    console.log('页面隐藏');
     this.saveGameState();
   },
 
   onUnload() {
-    // 页面卸载时清理定时器
+    console.log('页面卸载');
     if (this.gameTimer) {
       clearInterval(this.gameTimer);
     }
@@ -60,36 +66,74 @@ Page({
 
   // 初始化游戏
   initializeGame() {
-    this.gameEngine = new SudokuGame();
-    this.storage = new GameStorage();
+    console.log('开始初始化游戏...');
     
-    // 尝试恢复游戏状态
-    this.restoreGameState();
-    
-    // 如果没有恢复的游戏，开始新游戏
-    if (this.data.board.length === 0) {
-      this.startNewGame();
+    try {
+      // 初始化游戏引擎
+      console.log('正在创建游戏引擎...');
+      this.gameEngine = new SudokuGame();
+      console.log('游戏引擎创建成功:', this.gameEngine);
+      
+      // 初始化存储
+      console.log('正在初始化存储...');
+      this.storage = new GameStorage();
+      console.log('存储初始化成功:', this.storage);
+      
+      this.setData({
+        gameEngineStatus: '已初始化',
+        storageStatus: '已初始化',
+        debugInfo: '游戏引擎和存储初始化成功'
+      });
+      
+      // 尝试恢复游戏状态
+      console.log('尝试恢复游戏状态...');
+      this.restoreGameState();
+      
+      // 如果没有恢复的游戏，开始新游戏
+      if (this.data.board.length === 0) {
+        console.log('没有恢复的游戏状态，开始新游戏...');
+        this.startNewGame();
+      } else {
+        console.log('已恢复游戏状态，棋盘大小:', this.data.board.length);
+      }
+      
+    } catch (error) {
+      console.error('游戏初始化失败:', error);
+      this.setData({
+        errorMessage: `游戏初始化失败: ${error.message}`,
+        debugInfo: `错误详情: ${error.stack}`,
+        gameEngineStatus: '初始化失败',
+        storageStatus: '初始化失败'
+      });
     }
   },
 
   // 加载设置
   loadSettings() {
-    const settings = this.storage.loadSettings();
-    this.setData({
-      showTimer: settings.showTimer,
-      showHints: settings.showHints,
-      maxHints: settings.maxHints
-    });
+    try {
+      const settings = this.storage.loadSettings();
+      console.log('加载设置:', settings);
+      this.setData({
+        showTimer: settings.showTimer,
+        showHints: settings.showHints,
+        maxHints: settings.maxHints
+      });
+    } catch (error) {
+      console.error('加载设置失败:', error);
+    }
   },
 
   // 开始新游戏
   startNewGame(difficulty = 'medium', useOnline = false) {
+    console.log('开始新游戏:', { difficulty, useOnline });
+    
     this.setData({
       isLoading: true,
       isSolved: false,
       hintsUsed: 0,
       conflicts: [],
-      selectedCell: null
+      selectedCell: null,
+      debugInfo: '正在生成新游戏...'
     });
 
     // 停止当前定时器
@@ -101,17 +145,29 @@ Page({
       let puzzle;
       
       if (useOnline) {
-        // 在线获取谜题（这里使用本地谜题模拟）
+        console.log('获取在线谜题...');
         puzzle = this.getOnlinePuzzle();
       } else {
-        // 使用本地谜题
+        console.log('生成本地谜题...');
         puzzle = this.gameEngine.generatePuzzle(difficulty);
       }
-
+      
+      console.log('谜题生成成功:', puzzle);
+      
+      if (!puzzle || !puzzle.board) {
+        throw new Error('谜题数据无效');
+      }
+      
+      const newBoard = puzzle.board.map(row => [...row]);
+      const newInitialBoard = puzzle.initialBoard.map(row => [...row]);
+      
+      console.log('新棋盘数据:', { newBoard, newInitialBoard });
+      
       this.setData({
-        board: puzzle.board.map(row => [...row]),
-        initialBoard: puzzle.initialBoard.map(row => [...row]),
-        isLoading: false
+        board: newBoard,
+        initialBoard: newInitialBoard,
+        isLoading: false,
+        debugInfo: `游戏开始成功！棋盘大小: ${newBoard.length}x${newBoard[0].length}`
       });
 
       // 开始计时
@@ -124,7 +180,8 @@ Page({
       console.error('开始新游戏失败:', error);
       this.setData({
         isLoading: false,
-        errorMessage: '开始新游戏失败，请重试'
+        errorMessage: `开始新游戏失败: ${error.message}`,
+        debugInfo: `错误详情: ${error.stack}`
       });
       
       // 3秒后清除错误信息
@@ -136,10 +193,11 @@ Page({
 
   // 获取在线谜题（模拟）
   getOnlinePuzzle() {
-    // 这里应该调用真实的API
-    // 目前使用本地谜题模拟
+    console.log('获取在线谜题（模拟）...');
     const randomIndex = Math.floor(Math.random() * LOCAL_PUZZLES.length);
     const puzzle = LOCAL_PUZZLES[randomIndex];
+    
+    console.log('选择的本地谜题:', puzzle);
     
     return {
       board: puzzle.map(row => [...row]),
@@ -150,6 +208,7 @@ Page({
 
   // 开始计时
   startTimer() {
+    console.log('开始计时...');
     this.gameStartTime = Date.now();
     this.gameTimer = setInterval(() => {
       const elapsed = Date.now() - this.gameStartTime;
@@ -172,9 +231,11 @@ Page({
   // 单元格点击事件
   onCellClick(e) {
     const { row, col } = e.currentTarget.dataset;
+    console.log('单元格点击:', { row, col });
     
     // 检查是否是初始数字
     if (this.data.initialBoard[row][col]) {
+      console.log('这是初始数字，不能修改');
       return;
     }
     
@@ -186,6 +247,7 @@ Page({
   // 数字点击事件
   onNumberClick(e) {
     const number = e.currentTarget.dataset.number;
+    console.log('数字点击:', number);
     
     if (this.data.selectedCell && !this.data.isSolved) {
       const [row, col] = this.data.selectedCell;
@@ -193,6 +255,8 @@ Page({
       // 更新棋盘
       const newBoard = this.data.board.map(row => [...row]);
       newBoard[row][col] = number;
+      
+      console.log('更新棋盘:', { row, col, number, newBoard });
       
       this.setData({
         board: newBoard,
@@ -212,6 +276,7 @@ Page({
 
   // 清除按钮点击事件
   onClearClick() {
+    console.log('清除按钮点击');
     if (this.data.selectedCell && !this.data.isSolved) {
       const [row, col] = this.data.selectedCell;
       
@@ -234,6 +299,7 @@ Page({
 
   // 新游戏按钮点击事件
   onNewGameClick() {
+    console.log('新游戏按钮点击');
     if (this.data.showSolvedDialog) {
       this.setData({ showSolvedDialog: false });
     }
@@ -247,12 +313,14 @@ Page({
 
   // 在线谜题选择
   onOnlinePuzzle() {
+    console.log('选择在线谜题');
     this.setData({ showNetworkDialog: false });
     this.startNewGame('medium', true);
   },
 
   // 本地谜题选择
   onLocalPuzzle() {
+    console.log('选择本地谜题');
     this.setData({ showNetworkDialog: false });
     this.startNewGame('medium', false);
   },
@@ -273,6 +341,7 @@ Page({
 
   // 提示按钮点击事件
   onHintClick() {
+    console.log('提示按钮点击');
     if (this.data.hintsUsed < this.data.maxHints && !this.data.isSolved) {
       const hint = this.gameEngine.getHint(this.data.board);
       
@@ -312,6 +381,7 @@ Page({
 
   // 游戏完成处理
   gameCompleted() {
+    console.log('游戏完成！');
     this.stopTimer();
     
     const timeSpent = Date.now() - this.gameStartTime;
@@ -378,6 +448,7 @@ Page({
     const gameState = this.storage.loadGameState();
     
     if (gameState && gameState.board) {
+      console.log('恢复游戏状态:', gameState);
       this.setData({
         board: gameState.board,
         initialBoard: gameState.initialBoard,
@@ -396,13 +467,31 @@ Page({
       
       // 检查游戏是否完成
       this.checkGameCompletion(gameState.board);
+    } else {
+      console.log('没有找到可恢复的游戏状态');
     }
   },
 
   // 跳转到设置页面
   goToSettings() {
-    wx.switchTab({
+    wx.navigateTo({
       url: '/pages/settings/settings'
     });
+  },
+
+  // 调试功能：强制开始新游戏
+  forceNewGame() {
+    console.log('强制开始新游戏');
+    this.startNewGame();
+  },
+
+  // 调试功能：显示当前状态
+  showDebugInfo() {
+    console.log('当前页面数据:', this.data);
+    console.log('游戏引擎:', this.gameEngine);
+    console.log('存储:', this.storage);
   }
 });
+
+
+
