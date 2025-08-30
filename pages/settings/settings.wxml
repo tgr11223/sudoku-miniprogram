@@ -1,0 +1,154 @@
+<!--pages/settings/settings.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">设置</text>
+  </view>
+
+  <view class="settings-list">
+    <!-- 游戏设置 -->
+    <view class="settings-section">
+      <view class="section-title">游戏设置</view>
+      
+      <view class="setting-item">
+        <view class="setting-label">
+          <text>难度</text>
+        </view>
+        <view class="setting-control">
+          <picker bindchange="onDifficultyChange" value="{{difficultyIndex}}" range="{{difficultyOptions}}">
+            <view class="picker">
+              {{difficultyOptions[difficultyIndex]}}
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="setting-item">
+        <view class="setting-label">
+          <text>显示计时器</text>
+        </view>
+        <view class="setting-control">
+          <switch checked="{{showTimer}}" bindchange="onTimerChange" color="#4A90E2" />
+        </view>
+      </view>
+
+      <view class="setting-item">
+        <view class="setting-label">
+          <text>显示提示</text>
+        </view>
+        <view class="setting-control">
+          <switch checked="{{showHints}}" bindchange="onHintsChange" color="#4A90E2" />
+        </view>
+      </view>
+
+      <view class="setting-item" wx:if="{{showHints}}">
+        <view class="setting-label">
+          <text>最大提示次数</text>
+        </view>
+        <view class="setting-control">
+          <slider min="1" max="10" value="{{maxHints}}" bindchange="onMaxHintsChange" 
+                  activeColor="#4A90E2" backgroundColor="#E0E0E0" />
+          <text class="slider-value">{{maxHints}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 界面设置 -->
+    <view class="settings-section">
+      <view class="section-title">界面设置</view>
+      
+      <view class="setting-item">
+        <view class="setting-label">
+          <text>主题</text>
+        </view>
+        <view class="setting-control">
+          <picker bindchange="onThemeChange" value="{{themeIndex}}" range="{{themeOptions}}">
+            <view class="picker">
+              {{themeOptions[themeIndex]}}
+            </view>
+          </picker>
+        </view>
+      </view>
+    </view>
+
+    <!-- 音效设置 -->
+    <view class="settings-section">
+      <view class="section-title">音效设置</view>
+      
+      <view class="setting-item">
+        <view class="setting-label">
+          <text>音效</text>
+        </view>
+        <view class="setting-control">
+          <switch checked="{{soundEnabled}}" bindchange="onSoundChange" color="#4A90E2" />
+        </view>
+      </view>
+
+      <view class="setting-item">
+        <view class="setting-label">
+          <text>震动</text>
+        </view>
+        <view class="setting-control">
+          <switch checked="{{vibrationEnabled}}" bindchange="onVibrationChange" color="#4A90E2" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 数据设置 -->
+    <view class="settings-section">
+      <view class="section-title">数据设置</view>
+      
+      <view class="setting-item">
+        <view class="setting-label">
+          <text>自动保存</text>
+        </view>
+        <view class="setting-control">
+          <switch checked="{{autoSave}}" bindchange="onAutoSaveChange" color="#4A90E2" />
+        </view>
+      </view>
+
+      <view class="setting-item">
+        <view class="setting-label">
+          <text>清除游戏数据</text>
+        </view>
+        <view class="setting-control">
+          <button class="danger-btn" bindtap="onClearData">清除</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 关于 -->
+    <view class="settings-section">
+      <view class="section-title">关于</view>
+      
+      <view class="setting-item">
+        <view class="setting-label">
+          <text>版本</text>
+        </view>
+        <view class="setting-control">
+          <text class="version-text">{{version}}</text>
+        </view>
+      </view>
+
+      <view class="setting-item">
+        <view class="setting-label">
+          <text>开发者</text>
+        </view>
+        <view class="setting-control">
+          <text class="developer-text">数独游戏团队</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 确认清除数据对话框 -->
+  <view wx:if="{{showClearDataDialog}}" class="dialog-overlay">
+    <view class="dialog-content">
+      <view class="dialog-title">确认清除</view>
+      <view class="dialog-message">这将清除所有游戏数据，包括游戏进度、统计信息和设置。此操作无法撤销。</view>
+      <view class="dialog-buttons">
+        <button class="dialog-btn danger" bindtap="confirmClearData">确认清除</button>
+        <button class="dialog-btn secondary" bindtap="cancelClearData">取消</button>
+      </view>
+    </view>
+  </view>
+</view>

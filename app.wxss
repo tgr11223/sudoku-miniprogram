@@ -1,0 +1,78 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+}
+
+/* 全局样式 */
+page {
+  background-color: #F5F7FA;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* 通用按钮样式 */
+.btn {
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  border: none;
+  outline: none;
+}
+
+.btn-primary {
+  background-color: #4A90E2;
+  color: white;
+}
+
+.btn-success {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #FF5722;
+  color: white;
+}
+
+/* 卡片样式 */
+.card {
+  background-color: white;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  padding: 32rpx;
+  margin: 24rpx;
+}
+
+/* 文本样式 */
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: #4A90E2;
+}
+
+.text-success {
+  color: #4CAF50;
+}
+
+.text-danger {
+  color: #FF5722;
+}
+
+/* 间距工具类 */
+.mt-16 { margin-top: 32rpx; }
+.mb-16 { margin-bottom: 32rpx; }
+.ml-16 { margin-left: 32rpx; }
+.mr-16 { margin-right: 32rpx; }
+
+.p-16 { padding: 32rpx; }
+.pt-16 { padding-top: 32rpx; }
+.pb-16 { padding-bottom: 32rpx; }
+.pl-16 { padding-left: 32rpx; }
+.pr-16 { padding-right: 32rpx; }

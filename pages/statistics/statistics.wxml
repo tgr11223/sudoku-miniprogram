@@ -1,0 +1,126 @@
+<!--pages/statistics/statistics.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">游戏统计</text>
+  </view>
+
+  <!-- 总体统计 -->
+  <view class="stats-section">
+    <view class="section-title">总体统计</view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <view class="stat-value">{{statistics.totalGames}}</view>
+        <view class="stat-label">总游戏次数</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{statistics.completedGames}}</view>
+        <view class="stat-label">完成次数</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{statistics.completionRate}}%</view>
+        <view class="stat-label">完成率</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{statistics.averageTimeDisplay}}</view>
+        <view class="stat-label">平均用时</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最佳记录 -->
+  <view class="stats-section" wx:if="{{statistics.bestTime}}">
+    <view class="section-title">最佳记录</view>
+    <view class="best-record">
+      <view class="best-time">
+        <text class="time-label">最佳用时：</text>
+        <text class="time-value">{{statistics.bestTimeDisplay}}</text>
+      </view>
+      <view class="best-date" wx:if="{{statistics.lastPlayed}}">
+        <text class="date-label">最近游戏：</text>
+        <text class="date-value">{{statistics.lastPlayedDisplay}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 难度统计 -->
+  <view class="stats-section">
+    <view class="section-title">难度统计</view>
+    <view class="difficulty-stats">
+      <view class="difficulty-item" wx:for="{{difficultyStats}}" wx:key="difficulty">
+        <view class="difficulty-header">
+          <text class="difficulty-name">{{item.name}}</text>
+          <text class="difficulty-count">{{item.played}}/{{item.completed}}</text>
+        </view>
+        <view class="difficulty-progress">
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{item.completionRate}}%"></view>
+          </view>
+          <text class="progress-text">{{item.completionRate}}%</text>
+        </view>
+        <view class="difficulty-best" wx:if="{{item.bestTime}}">
+          <text class="best-label">最佳：</text>
+          <text class="best-value">{{item.bestTimeDisplay}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 游戏历史 -->
+  <view class="stats-section" wx:if="{{recentGames.length > 0}}">
+    <view class="section-title">最近游戏</view>
+    <view class="recent-games">
+      <view class="game-item" wx:for="{{recentGames}}" wx:key="id">
+        <view class="game-info">
+          <view class="game-date">{{item.dateDisplay}}</view>
+          <view class="game-result">
+            <text class="result-status {{item.completed ? 'completed' : 'incomplete'}}">
+              {{item.completed ? '完成' : '未完成'}}
+            </text>
+            <text class="result-time" wx:if="{{item.timeSpent}}">{{item.timeDisplay}}</text>
+          </view>
+        </view>
+        <view class="game-difficulty">{{item.difficultyName}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 成就系统 -->
+  <view class="stats-section">
+    <view class="section-title">成就</view>
+    <view class="achievements">
+      <view class="achievement-item {{item.unlocked ? 'unlocked' : 'locked'}}" 
+            wx:for="{{achievements}}" wx:key="id">
+        <view class="achievement-icon">
+          <text class="icon-text">{{item.icon}}</text>
+        </view>
+        <view class="achievement-info">
+          <view class="achievement-name">{{item.name}}</view>
+          <view class="achievement-desc">{{item.description}}</view>
+          <view class="achievement-progress" wx:if="{{item.progress}}">
+            <text class="progress-text">{{item.current}}/{{item.target}}</text>
+          </view>
+        </view>
+        <view class="achievement-status">
+          <text class="status-text">{{item.unlocked ? '已获得' : '未获得'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 重置统计按钮 -->
+  <view class="reset-section">
+    <button class="reset-btn" bindtap="onResetStats">重置统计</button>
+  </view>
+
+  <!-- 确认重置对话框 -->
+  <view wx:if="{{showResetDialog}}" class="dialog-overlay">
+    <view class="dialog-content">
+      <view class="dialog-title">确认重置</view>
+      <view class="dialog-message">这将清除所有游戏统计信息，包括最佳记录和成就。此操作无法撤销。</view>
+      <view class="dialog-buttons">
+        <button class="dialog-btn danger" bindtap="confirmResetStats">确认重置</button>
+        <button class="dialog-btn secondary" bindtap="cancelResetStats">取消</button>
+      </view>
+    </view>
+  </view>
+</view>
